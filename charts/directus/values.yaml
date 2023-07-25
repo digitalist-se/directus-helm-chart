@@ -83,6 +83,12 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
 nodeSelector: {}
 
 tolerations: []
