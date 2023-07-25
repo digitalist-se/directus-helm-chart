@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: directus/directus 
+  repository: directus/directus
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "10.2.1"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
