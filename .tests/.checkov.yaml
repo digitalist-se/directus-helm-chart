@@ -1,0 +1,3 @@
+skip-path:
+  - /directus/charts/
+  - /charts/directus/charts/
