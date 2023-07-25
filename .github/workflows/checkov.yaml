@@ -30,6 +30,7 @@ jobs:
           framework: helm # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
           output_format: cli,sarif # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
           output_file_path: console,results.sarif
+          download-external-modules: false
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         
