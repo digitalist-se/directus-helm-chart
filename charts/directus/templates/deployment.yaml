@@ -45,16 +45,28 @@ spec:
             - name: http
               containerPort: 8055
               protocol: TCP
+          {{- if .Values.startupProbe.enabled }} 
+          startupProbe:
+            httpGet:
+              path: /server/health/
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
+          {{- end }}
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 20
             httpGet:
-              path: /
+              path: /server/health/
               port: http
           {{- end }}
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 10
             httpGet:
-              path: /
+              path: /server/health/
               port: http
           {{- end }}    
           resources:
