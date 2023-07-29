@@ -1,0 +1,16 @@
+{{ if  .Values.extraConfigMap.create -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "directus.fullname" . }}-extra-config-map
+  namespace: {{.Values.namespace}}
+  labels:
+    {{- include "directus.labels" . | nindent 4 }}
+data:
+{{- if  and .Values.extraConfigMaps.create .Values.extraConfigMaps.data }}
+{{- range $index, $content := .Values.extraConfigMaps.data }}
+  {{ $index }}: |-
+{{ $content | indent 4 }}
+{{- end }}
+{{- end }}
+{{- end }}

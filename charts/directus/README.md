@@ -19,6 +19,51 @@ To install Directus, use the following commands.
     helm install directus directus/directus
     ```
 
+Of course, you can use whatever release name you want.
+
+## General production recommendations
+
+We recommend to have three replicas at least for Directus in production use.
+We also don't recommend to turn of the probes, these helps to keep Directus
+active, we have had issues when it comes 'idle' and the response well be bad
+on the first request, usually throwing errors.
+
+If you have more than one replica, you should have cache in redis, so you could share
+the cache.
+
+```yaml
+extraEnvVars:
+  - name: CACHE_ENABLED
+    value: "true"
+  - name: CACHE_TTL
+    value: 5m
+  - name: CACHE_AUTO_PURGE
+    value: "true"
+  - name: CACHE_STORE
+    value: redis
+  - name: REDIS
+    value: "redis://:mysecretpassword@directus-redis-headless:6379/1"
+  ...    
+```
+
+## Healthchecks
+
+The probes makes http requests to `/server/health/`, doing that, you may get
+warnings in your pod logs for high threshold on mysql, cache or storage,
+you could override the default for treshold warnings , if you can't make the
+answer time improve for the services.
+
+```yaml
+extraEnvVars:
+  - name: DB_HEALTHCHECK_THRESHOLD
+    value: "300"
+  - name: CACHE_HEALTHCHECK_THRESHOLD
+    value: "300"
+  - name: STORAGE_S3_HEALTHCHECK_THRESHOLD
+    value: "850"
+  ...    
+```
+
 ## Uninstall
 
 To uninstall and delete Directus Helm release:
@@ -53,14 +98,22 @@ helm delete directus-release
 | `autoscaling.enabled`| Enables Autoscaling | `false`|
 | `autoscaling.minReplicas`| Set minimum number of replicas. Only applies when `autoscaling.enabled` is `true`.  | `1`|
 | `autoscaling.maxReplicas`| Set maximum number of replicas Only applies when `autoscaling.enabled` is `true`.   | `100`  |
-| `livenessProbe.enabled`| Enables livenessProbe | `false`|
-| `readinessProbe.enabled`| Enables readinessProbe | `false`|
+| `startupProbe.enabled`| Enables livenessProbe | `true`|
+| `livenessProbe.enabled`| Enables livenessProbe | `true`|
+| `readinessProbe.enabled`| Enables readinessProbe | `true`|
 | `nodeSelector`   | Node labels for pod assignment | `{}`   |
 | `tolerations`| List of node taints to tolerate| `[]`   |
 | `affinity`| Node/Pod affinities | `{}`   |
 | `extraEnvVars`   | Adds extra environment variables.  Refer to [Directus Docs](https://docs.directus.io/configuration/config-options/) for more details. | `{}`   |
 | `mariadb.enabled`| Deploys MariaDB server | `true` |
 | `redis.enabled`  | Deploys Redis server| `true` |
+| `sidecars`| Sidecars to attach to Directus deployment| `[]`   |
+| `extraSecrets.create`| Create extra secrets| `false`   |
+| `extraSecrets.data`| Secrets to add| `{}`   |
+| `extraConfigMap.create`| Create extra configmap | `false`   |
+| `extraConfigMap.data`| Configmap data to add | `{}`   |
+| `extraVolumes`| Extra volumes to add | `[]`   |
+| `extraVolumeMounts`| Extra volumemounts to add | `[]`   |
 
 ### External Database
 
@@ -68,7 +121,7 @@ If you want to use an external DB, you need to disable MariaDB by adding `mariad
 
 These variables can be added by using the following values:
 
-```
+```yaml
 extraEnvVars:
   - name: DB_CLIENT
     value: mysql
@@ -82,7 +135,7 @@ By default, Directus stores the uploaded files on the container disk.  Thus the 
 
 These variables can be added by using the following values:
 
-```
+```yaml
 extraEnvVars:
   - name: STORAGE_LOCATIONS
     value: amazon
@@ -91,8 +144,3 @@ extraEnvVars:
   ...
 
 ```
-
-## To Do
-
-1. Test on a couple of clusters
-2. Add a values.production.yaml file that deploys an HA setup

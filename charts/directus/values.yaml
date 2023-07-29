@@ -76,6 +76,72 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+
+sidecars: []
+  # You can add any sidecar to the directus pod, like:
+  # sidecars:
+  #   - image: busybox
+  #     name: busy
+  #     command:
+  #       - "/bin/sh"
+  #       - "-c"
+  #       - "echo 'message from sidecar' > /inthis.txt"
+
+extraSecrets:
+  create: false
+  data: {}
+# secrets need to base64 encoded when added.
+#  data:
+#    name: Zm9vCg==
+#    bar: YmFyCg==
+
+extraConfigMap:
+  create: false
+  data: {}
+  # You can create an extra config map, and attach data to it. This will be named
+  # {{ include "directus.fullname" . }}-extra-config-map
+  # data:
+  #   my.file: |
+  #     foo: bar
+
+extraVolumes: []
+# extraVolumes:
+# - name: mySecretVolume
+#   secret:
+#     secretName: directus-extra-secrets
+# - name: my.file
+#   configMap:
+#     name: directus-extra-config-map
+#     items:
+#     - key: "my.file"
+#       path: "/tmp/my.file"
+extraVolumeMounts: []
+# extraVolumeMounts:
+# - name: mySecretVolume
+#   mountPath: /foo/secrets/mySecretVolume/
+# - name: my.file
+#   mountPath: /tmp/my.file
+#   subPath: my.file
+
+extraServices: {}
+#  - name: foo
+    ## Service port type
+#    type: ClusterIP
+    ## Service protocol
+#    protocol: TCP
+    ## The container target port
+#    containerPort: 12001
+    ## The service port
+#    port: 12001
+#    selector:
+#      app: directus
+    ## The node port (only relevant for type LoadBalancer or NodePort)
+#    nodePort:
+    ## The cluster ip address (only relevant for type LoadBalancer or NodePort)
+#    clusterIP:
+    ## The loadbalancer ip address (only relevant for type LoadBalancer)
+#    loadBalancerIP:
+
 autoscaling:
   enabled: false
   minReplicas: 1
