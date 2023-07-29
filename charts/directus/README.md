@@ -108,6 +108,7 @@ helm delete directus-release
 | `mariadb.enabled`| Deploys MariaDB server | `true` |
 | `redis.enabled`  | Deploys Redis server| `true` |
 | `sidecars`| Sidecars to attach to Directus deployment| `[]`   |
+| `initContainers`| initContainers to start before directus | `[]`   |
 | `extraSecrets.create`| Create extra secrets| `false`   |
 | `extraSecrets.data`| Secrets to add| `{}`   |
 | `extraConfigMap.create`| Create extra configmap | `false`   |

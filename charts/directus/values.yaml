@@ -76,6 +76,15 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+initContainers: []
+
+# initContainers:
+#   - image: busybox
+#     name: busy
+#     command:
+#       - "/bin/sh"
+#       - "-c"
+#       - "echo 'message from init container'"
 
 sidecars: []
   # You can add any sidecar to the directus pod, like:
