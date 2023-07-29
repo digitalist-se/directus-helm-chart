@@ -43,7 +43,7 @@ extraEnvVars:
     value: redis
   - name: REDIS
     value: "redis://:mysecretpassword@directus-redis-headless:6379/1"
-  ...    
+  ...
 ```
 
 ## Healthchecks
@@ -61,7 +61,7 @@ extraEnvVars:
     value: "300"
   - name: STORAGE_S3_HEALTHCHECK_THRESHOLD
     value: "850"
-  ...    
+  ...
 ```
 
 ## Uninstall
@@ -104,7 +104,7 @@ helm delete directus-release
 | `nodeSelector`   | Node labels for pod assignment | `{}`   |
 | `tolerations`| List of node taints to tolerate| `[]`   |
 | `affinity`| Node/Pod affinities | `{}`   |
-| `extraEnvVars`   | Adds extra environment variables.  Refer to [Directus Docs](https://docs.directus.io/configuration/config-options/) for more details. | `{}`   |
+| `extraEnvVars`   | Adds extra environment variables.  Refer to [Directus Docs](https://docs.directus.io/self-hosted/config-options.html) for more details. | `{}`   |
 | `mariadb.enabled`| Deploys MariaDB server | `true` |
 | `redis.enabled`  | Deploys Redis server| `true` |
 | `sidecars`| Sidecars to attach to Directus deployment| `[]`   |
@@ -118,7 +118,7 @@ helm delete directus-release
 
 ### External Database
 
-If you want to use an external DB, you need to disable MariaDB by adding `mariadb.enabled: false` and add the necessary Environment Variables according to [Directus Documentation](https://docs.directus.io/configuration/config-options/#database).
+If you want to use an external DB, you need to disable MariaDB by adding `mariadb.enabled: false` and add the necessary Environment Variables according to [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#database).
 
 These variables can be added by using the following values:
 
@@ -132,7 +132,7 @@ extraEnvVars:
 
 ### External File Storage
 
-By default, Directus stores the uploaded files on the container disk.  Thus the data will be lost when the pod is restarted.  You need to configure Directus to use an external storage adapter such as S3, Google Storage and Azure.  This can be done by adding the necessary Environment Variables as documented in [Directus Documentation](https://docs.directus.io/configuration/config-options/#file-storage).
+By default, Directus stores the uploaded files on the container disk.  Thus the data will be lost when the pod is restarted.  You need to configure Directus to use an external storage adapter such as S3, Google Storage and Azure.  This can be done by adding the necessary Environment Variables as documented in [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
 
 These variables can be added by using the following values:
 
