@@ -115,6 +115,7 @@ helm delete directus-release
 | `extraConfigMap.data`| Configmap data to add | `{}`   |
 | `extraVolumes`| Extra volumes to add | `[]`   |
 | `extraVolumeMounts`| Extra volumemounts to add | `[]`   |
+| `snapshot`| Take schema snapshot at init  | `false`   |
 
 ### External Database
 

@@ -43,6 +43,28 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
             {{- end }}
+      {{- if .Values.snapshot }}
+        - name: {{ .Chart.Name }}-schema-snapshot
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["node"]
+          args: ["/directus/cli.js", "schema", "snapshot", "--format", "yaml", "-y", "/startup-snapshot/snapshot.yaml"]
+          env:
+            {{- if .Values.ingress.enabled }}
+            - name: PUBLIC_URL
+              value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
+            {{- end }}
+            {{- if .Values.extraEnvVars }}
+            {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
+            {{- end }}
+ {{- if .Values.snapshot }}
+          volumeMounts:
+            - mountPath: /startup-snapshot
+              name: startup-snapshot
+{{- end }}
+      {{- end }} 
       {{- if .Values.initContainers }}
 {{ toYaml .Values.initContainers | indent 8 }}
       {{- end }} 
@@ -65,6 +87,11 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
             {{- end }}
+          volumeMounts:
+ {{- if .Values.snapshot }}
+            - mountPath: /startup-snapshot
+              name: startup-snapshot
+{{- end }}              
 {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 10 }}
 {{- end }}
@@ -110,6 +137,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+{{- if .Values.snapshot }}
+      - name: startup-snapshot
+        emptyDir: {}
+{{- end }}
 {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 6 }}
 {{- end }}
