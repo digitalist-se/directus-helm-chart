@@ -59,11 +59,9 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
             {{- end }}
- {{- if .Values.snapshot }}
           volumeMounts:
             - mountPath: /startup-snapshot
               name: startup-snapshot
-{{- end }}
       {{- end }} 
       {{- if .Values.initContainers }}
 {{ toYaml .Values.initContainers | indent 8 }}
@@ -91,7 +89,7 @@ spec:
  {{- if .Values.snapshot }}
             - mountPath: /startup-snapshot
               name: startup-snapshot
-{{- end }}              
+{{- end }}
 {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 10 }}
 {{- end }}
