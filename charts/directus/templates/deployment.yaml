@@ -40,6 +40,33 @@ spec:
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
             {{- end }}
+            - name: KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-secrets
+                  key: key
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-secrets
+                  key: secret
+            {{- if .Values.mariadb.enabled }}
+            - name: DB_DATABASE
+              value: {{ .Values.mariadb.auth.database }}
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: {{ .Values.mariadb.auth.username }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-mariadb
+                  key: mariadb-password
+            - name: DB_CLIENT
+              value: mysql
+            - name: DB_HOST
+              value: {{ template "directus.fullname" . }}-mariadb
+            {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
             {{- end }}
@@ -55,6 +82,33 @@ spec:
             {{- if .Values.ingress.enabled }}
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
+            {{- end }}
+            - name: KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-secrets
+                  key: key
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-secrets
+                  key: secret
+            {{- if .Values.mariadb.enabled }}
+            - name: DB_DATABASE
+              value: {{ .Values.mariadb.auth.database }}
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: {{ .Values.mariadb.auth.username }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-mariadb
+                  key: mariadb-password
+            - name: DB_CLIENT
+              value: mysql
+            - name: DB_HOST
+              value: {{ template "directus.fullname" . }}-mariadb
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
@@ -81,6 +135,33 @@ spec:
             {{- if .Values.ingress.enabled }}
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
+            {{- end }}
+            - name: KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-secrets
+                  key: key
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-secrets
+                  key: secret
+            {{- if .Values.mariadb.enabled }}
+            - name: DB_DATABASE
+              value: {{ .Values.mariadb.auth.database }}
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: {{ .Values.mariadb.auth.username }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-mariadb
+                  key: mariadb-password
+            - name: DB_CLIENT
+              value: mysql
+            - name: DB_HOST
+              value: {{ template "directus.fullname" . }}-mariadb
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}

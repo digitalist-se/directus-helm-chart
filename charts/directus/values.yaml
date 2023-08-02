@@ -4,6 +4,13 @@
 
 replicaCount: 1
 
+key: 4d596b1af3e1ae23d54110da1a377c66
+# An uniquie identifier, could be created like:
+# openssl rand -hex 16
+secret: 7cf5038d95dfba34178e0c120d77d75e
+# An uniquie identifier, could be created like:
+# openssl rand -hex 16
+
 image:
   repository: directus/directus
   pullPolicy: Always
@@ -194,7 +201,7 @@ mariadb:
   image:
     registry: docker.io
     repository: bitnami/mariadb
-    tag: 10.5.10-debian-10-r18
+    tag: 10.9.7-debian-11-r51
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -252,8 +259,8 @@ mariadb:
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-on-first-run
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
     ##
-    database: my_database
-    username: ""
+    database: directus
+    username: directus
     password: ""
     ## MariaDB replication user and password
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-up-a-replication-cluster

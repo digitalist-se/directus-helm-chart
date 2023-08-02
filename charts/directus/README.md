@@ -77,6 +77,8 @@ helm delete directus-release
 | Parameter | Description | Default Value |
 | --- | --- | --- |
 | `replicaCount`   | Number of replicas  | 1  |
+| `key`   | An unique key  | `4d596b1af3e1ae23d54110da1a377c66` (please change)  |
+| `secret`   | An unique secret  | `7cf5038d95dfba34178e0c120d77d75e` (please change)  |
 | `image.repository`   | Image name  | `directus/directus`   |
 | `image.pullPolicy`   | Image pull policy   | `IfNotPresent`|
 | `image.pullSecrets`  | Image pull secrets  | `{}`   |
