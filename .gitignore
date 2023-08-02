@@ -5,7 +5,7 @@ bin/*
 .project
 /.bin
 /_test/secrets/*.json
-
+DONT.md
 # OSX leaves these everywhere on SMB shares
 ._*
 
