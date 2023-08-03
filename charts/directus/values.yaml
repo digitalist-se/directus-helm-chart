@@ -4,6 +4,14 @@
 
 replicaCount: 1
 
+admin:
+  email:
+  password:
+
+# Set admin email and password, if left empty, Directus will
+# create an user with email admin@example.co and a random password.
+# Password would be printed out in the init container.
+
 key: 4d596b1af3e1ae23d54110da1a377c66
 # An uniquie identifier, could be created like:
 # openssl rand -hex 16
@@ -63,6 +71,20 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+cache:
+  enabled: true
+  ttl: "5m"
+  autoPurge: true
+  store: "redis"
+# Set cache values, disable cache with setting enabled: false
+
+generateEnvVars:
+  mariadb: true
+  redis: true
+# Generates default env variables for mariadb and redis, so you don't
+# need to set this as extraEnvVars. Set to false to disable this
+# behaviour.
 
 extraEnvVars: {}
   # An array to add extra environment variables
@@ -1482,7 +1504,7 @@ redis:
   replica:
     ## @param replica.replicaCount Number of Redis(TM) replicas to deploy
     ##
-    replicaCount: 3
+    replicaCount: 0
     ## @param replica.configuration Configuration for Redis(TM) replicas nodes
     ## ref: https://redis.io/topics/config
     ##

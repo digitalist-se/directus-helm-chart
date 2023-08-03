@@ -28,6 +28,30 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
+{{- if .Values.mariadb.enabled }}
+        - name: db-init
+          image:  "{{ .Values.mariadb.image.registry }}/{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "until mysql --host=${DB_HOST} --user=${DB_USER} --password=${DB_PASSWORD} --execute=\"SELECT 1;\"; do echo waiting for mysql; sleep 2; done;"
+          env:
+            - name: DB_DATABASE
+              value: {{ .Values.mariadb.auth.database }}
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: {{ .Values.mariadb.auth.username }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-mariadb
+                  key: mariadb-password
+            - name: DB_CLIENT
+              value: mysql
+            - name: DB_HOST
+              value: {{ template "directus.fullname" . }}-mariadb
+{{- end }}
         - name: {{ .Chart.Name }}-init
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -50,6 +74,14 @@ spec:
                 secretKeyRef:
                   name: {{ template "directus.fullname" . }}-secrets
                   key: secret
+            {{- if .Values.admin.email }}
+            - name: ADMIN_EMAIL
+              value: {{ .Values.admin.email }}
+            {{- end }}
+            {{- if .Values.admin.password }}
+            - name: ADMIN_PASSWORD
+              value: {{ .Values.admin.password }}
+            {{- end }}
             {{- if .Values.mariadb.enabled }}
             - name: DB_DATABASE
               value: {{ .Values.mariadb.auth.database }}
@@ -132,6 +164,14 @@ spec:
           command: ["node"]
           args: ["/directus/cli.js", "start"]
           env:
+            {{- if .Values.admin.email }}
+            - name: ADMIN_EMAIL
+              value: {{ .Values.admin.email }}
+            {{- end }} 
+            {{- if .Values.admin.password }}
+            - name: ADMIN_PASSWORD
+              value: {{ .Values.admin.password }}
+            {{- end }} 
             {{- if .Values.ingress.enabled }}
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
@@ -146,6 +186,7 @@ spec:
                 secretKeyRef:
                   name: {{ template "directus.fullname" . }}-secrets
                   key: secret
+{{- if .Values.generateEnvVars.mariadb }}
             {{- if .Values.mariadb.enabled }}
             - name: DB_DATABASE
               value: {{ .Values.mariadb.auth.database }}
@@ -162,6 +203,34 @@ spec:
               value: mysql
             - name: DB_HOST
               value: {{ template "directus.fullname" . }}-mariadb
+            {{- end }}
+{{- end }}
+{{- if .Values.generateEnvVars.redis }}
+            {{- if .Values.redis.enabled }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "directus.fullname" . }}-redis
+                  key: redis-password
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "1"
+            - name: REDIS_USERNAME
+              value: ""
+            - name: REDIS_HOST
+              value: {{ template "directus.fullname" . }}-redis-headless
+            {{- end }}
+{{- end }}
+            {{- if .Values.cache.enabled }}
+            - name: CACHE_ENABLED
+              value: "true"
+            - name: CACHE_TTL
+              value: {{ .Values.cache.ttl }}
+            - name: CACHE_STORE
+              value: {{ .Values.cache.store }}
+            - name: CACHE_AUTO_PURGE
+              value: {{ .Values.cache.autoPurge | quote }}
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
