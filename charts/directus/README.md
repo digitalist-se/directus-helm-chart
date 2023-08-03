@@ -1,5 +1,7 @@
 # Directus Helm Chart
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/directus)](https://artifacthub.io/packages/search?repo=directus)
+
 Installs [Directus](https://directus.io/), the open data platform for headless content management via Helm Chart.
 
 ## Install
