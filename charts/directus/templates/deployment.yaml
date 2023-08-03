@@ -60,10 +60,15 @@ spec:
           command: ["node"]
           args: ["/directus/cli.js", "bootstrap"]
           env:
+{{- if .Values.public.url }}
+            - name: PUBLIC_URL
+              value: {{ .Values.public.url }}
+{{ else }}
             {{- if .Values.ingress.enabled }}
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
             {{- end }}
+{{- end }}
             - name: KEY
               valueFrom:
                 secretKeyRef:
@@ -111,10 +116,15 @@ spec:
           command: ["node"]
           args: ["/directus/cli.js", "schema", "snapshot", "--format", "yaml", "-y", "/startup-snapshot/snapshot.yaml"]
           env:
+{{- if .Values.public.url }}
+            - name: PUBLIC_URL
+              value: {{ .Values.public.url }}
+{{ else }}
             {{- if .Values.ingress.enabled }}
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
             {{- end }}
+{{- end }}
             - name: KEY
               valueFrom:
                 secretKeyRef:
@@ -167,14 +177,27 @@ spec:
             {{- if .Values.admin.email }}
             - name: ADMIN_EMAIL
               value: {{ .Values.admin.email }}
-            {{- end }} 
+            {{- end }}
             {{- if .Values.admin.password }}
             - name: ADMIN_PASSWORD
               value: {{ .Values.admin.password }}
-            {{- end }} 
+            {{- end }}
+            {{- if .Values.log.level }}
+            - name: LOG_LEVEL
+              value: {{ .Values.log.level }}
+            {{- end }}
+            {{- if .Values.log.style }}
+            - name: LOG_STYLE
+              value: {{ .Values.log.style }}
+            {{- end }}
+            {{- if .Values.public.url }}
+            - name: PUBLIC_URL
+              value: {{ .Values.public.url }}
+            {{ else }}
             {{- if .Values.ingress.enabled }}
             - name: PUBLIC_URL
               value: http{{ if .Values.ingress.tls }}s{{ end }}://{{(index .Values.ingress.hosts 0).host }}
+            {{- end }}
             {{- end }}
             - name: KEY
               valueFrom:
