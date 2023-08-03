@@ -1,4 +1,6 @@
-# Directus Helm Chart
+# Directus Helm Chart by Digitalist
+
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/directus)](https://artifacthub.io/packages/search?repo=directus)
 
 This Helm chart installs [Directus](https://directus.io/), a real-time API, and App dashboard for managing SQL database content.
 
