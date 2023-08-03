@@ -8,9 +8,6 @@ We strive to make the installation of Directus as easy as possible, but there ar
 
 We recommend that you either override the default values file from the repository or set your keys using  `--set`.
 
-*Disclaimer:* Please note that we are working on moving the Directus installation to be fully automated. Currently, you might encounter issues that require you to set
- `extraEnvVars` for missing values. Our plan is to have addressed all these issues in version `0.7.0`.
-
 ### Add helm repo
 
 Add the Directus Helm repository:
@@ -103,6 +100,9 @@ helm delete my-release-name
 | `replicaCount`   | Number of replicas  | 1  |
 | `key`   | Unique key  | `4d596b1af3e1ae23d54110da1a377c66` (please change)  |
 | `secret`   | Unique secret  | `7cf5038d95dfba34178e0c120d77d75e` (please change)  |
+| `admin.email`   | Email for admin user  | -- |
+| `admin.password`   | Password for admin user  | -- |
+| `public.url`   | Public URL for Directus  | -- |
 | `image.repository`   | Image name  | `directus/directus`   |
 | `image.pullPolicy`   | Image pull policy   | `IfNotPresent`|
 | `image.pullSecrets`  | Image pull secrets  | `{}`   |
@@ -130,6 +130,8 @@ helm delete my-release-name
 | `nodeSelector`   | Node labels for pod assignment | `{}`   |
 | `tolerations`| List of node taints to tolerate| `[]`   |
 | `affinity`| Node/Pod affinities | `{}`   |
+| `generateEnvVars.mariadb`| Creates env. variables from mariadb values | `true`   |
+| `generateEnvVars.redis`| Creates env. variables from redis values | `true`   |
 | `extraEnvVars`   | Adds extra environment variables.  Refer to [Directus Docs](https://docs.directus.io/self-hosted/config-options.html) for more details. | `{}`   |
 | `mariadb.enabled`| Deploys MariaDB server | `true` |
 | `redis.enabled`  | Deploys Redis server| `true` |
@@ -142,6 +144,12 @@ helm delete my-release-name
 | `extraVolumes`| Extra volumes to add | `[]`   |
 | `extraVolumeMounts`| Extra volume mounts to add | `[]`   |
 | `snapshot`| Take schema snapshot at init  | `false`   |
+| `log.level`| Logging level | `info`   |
+| `log.style`| Logging style | `pretty`   |
+| `cache.enabled`| To enable caching | `true`   |
+| `cache.ttl`| Time to live for cache objects | `5m`   |
+| `cache.autoPurge`| Auto purge cache | `true`   |
+| `cache.store`| Where to store cache | `redis`   |
 
 ### External Database
 
