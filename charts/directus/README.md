@@ -1,29 +1,53 @@
 # Directus Helm Chart
 
-Installs [Directus](https://directus.io/), the open data platform for headless content management via Helm Chart.
+Installs [Directus](https://directus.io/), a real-time API and App dashboard for managing SQL database content, with Helm.
 
 ## Install
 
-To install Directus, use the following commands.
+We try to make it easy as possible to install Directus, while there is a couple of things
+that you always should override from the default, most important, key and secret.
+
+So we recommend that you either override the defaults value file from the repo, or set
+your keys with `--set`.
+
+*Disclaimer:* Please note that we are working on to move Directus install to fully automated. Right now, you will most likely get into issues, requring you to set
+ `extraEnvVars` for missing values. Plan is to have fixed all these issues in version `0.7.0`.
+
+### Add helm repo
 
 1. Add Directus Helm repository:
 
-    ```sh
-    helm repo add directus https://digitalist-se.github.io/directus-helm-chart
-    helm repo update
-    ```
+```bash
+helm repo add directus https://digitalist-se.github.io/directus-helm-chart
+helm repo update
+```
 
-2. Install Helm Chart with `directus` release name:
+### Install example one
 
-    ```sh
-    helm install directus directus/directus
-    ```
+To install Directus, use the following commands.
 
-Of course, you can use whatever release name you want.
+```bash
+helm install my-release-name --set key=myrandomkey --set secret=myrandomsecret directus/directus
+```
+
+As an example you can generate your keys like:
+
+```bash
+openssl rand -hex 16
+```
+
+### Install example two
+
+```bash
+helm install my-release-name -f my-overrides.yaml directus/directus
+```
 
 ## General production recommendations
 
-We recommend to have three replicas at least for Directus in production use.
+Use HPA for directrus (`autoscaling: enabled: true`).
+
+We recommend to have three replicas at least for Directus in production use (`replicaCount: 1`) and set a minimum number of replicas for HPA to 3 (`autoscaling: minReplicas: 3`) and a maxiumum values that mataches your requirements (`autoscaling: maxReplicas: 12`)
+
 We also don't recommend to turn of the probes, these helps to keep Directus
 active, we have had issues when it comes 'idle' and the response well be bad
 on the first request, usually throwing errors.
@@ -149,5 +173,14 @@ extraEnvVars:
 
 ```
 
+## Overrides for docker image
 
+We are overriding the docker defaults, moving `directus bootstrap` to an initContainer
+and only running `directus start` in the container.
+
+## Plan
+
+We are moving more and more configuration to `values.yaml` instead of requiring to set
+all `extraEnvVars`to make Directus run from the first install. This work is in progress,
+and bigger changes will reflect the version number of the chart.
 
