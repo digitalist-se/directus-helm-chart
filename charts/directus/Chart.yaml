@@ -23,6 +23,11 @@ version: 0.7.1
 # It is recommended to use it with quotes.
 appVersion: "10.5.2"
 
+maintainers:
+  - name: Mikke Schirén
+    email: mikke.schiren@digitalist.se
+    url: https://www.digitalist.se/
+
 dependencies:
 - name: mariadb
   version: "12.2.4"
