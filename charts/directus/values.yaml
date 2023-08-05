@@ -12,7 +12,7 @@ public:
   url:
 # If you are using the ingress config in the helm chart, you
 # don't need to set this, as the public url fallbacks on that
-# value, if that's the public you would like to use, you don't 
+# value, if that's the public you would like to use, you don't
 # need to set this.
 # Directus can be installed without this, but generates a
 # warning at startup if it's missing
