@@ -1095,7 +1095,7 @@ mariadb:
 
   ## Array with extra yaml to deploy with the chart. Evaluated as a template
   ##
-  extraDeploy: [] 
+  extraDeploy: []
 
 redis:
   enabled: true
