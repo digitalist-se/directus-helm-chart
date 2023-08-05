@@ -1,6 +1,8 @@
 # Directus Helm Chart by Digitalist
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/directus)](https://artifacthub.io/packages/search?repo=directus)
+[![checkov](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml)
+[![Lint&Test chart](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml)
 
 This Helm chart installs [Directus](https://directus.io/), a real-time API, and App dashboard for managing SQL database content.
 
@@ -189,5 +191,5 @@ We are overriding the Docker defaults by moving `directus bootstrap` o an initCo
 
 ## Plan
 
-We are gradually moving more configuration settings to `values.yaml`  instead of requiring all `extraEnvVars` to be set during the initial installation of Directus. This work is in progress, and major changes will be reflected in the version number of the chart.
+We are gradually moving more configuration settings to `values.yaml`  instead of requiring all `extraEnvVars` to be set during the initial installation of Directus.
 
