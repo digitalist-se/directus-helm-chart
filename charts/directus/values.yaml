@@ -240,7 +240,7 @@ mariadb:
   image:
     registry: docker.io
     repository: bitnami/mariadb
-    tag: 10.9.7-debian-11-r51
+    tag: 10.9.7-debian-11-r54
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -975,7 +975,7 @@ mariadb:
     image:
       registry: docker.io
       repository: bitnami/mysqld-exporter
-      tag: 0.12.1-debian-10-r448
+      tag: 0.15.0-debian-11-r8
       pullPolicy: IfNotPresent
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
@@ -1158,7 +1158,7 @@ redis:
   image:
     registry: docker.io
     repository: bitnami/redis
-    tag: 6.2.3-debian-10-r22
+    tag: 6.2.13-debian-11-r20
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
