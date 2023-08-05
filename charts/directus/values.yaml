@@ -958,7 +958,7 @@ mariadb:
     image:
       registry: docker.io
       repository: bitnami/bitnami-shell
-      tag: 10-debian-10-r91
+      tag: 11-debian-11-r136
       pullPolicy: Always
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
@@ -2389,7 +2389,7 @@ redis:
     image:
       registry: docker.io
       repository: bitnami/bitnami-shell
-      tag: 10-debian-10-r92
+      tag: 11-debian-11-r136
       pullPolicy: Always
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
@@ -2435,7 +2435,7 @@ redis:
     image:
       registry: docker.io
       repository: bitnami/bitnami-shell
-      tag: 10-debian-10-r92
+      tag: 11-debian-11-r136
       pullPolicy: Always
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
