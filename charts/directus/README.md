@@ -1,8 +1,8 @@
 # Directus Helm Chart by Digitalist
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/directus)](https://artifacthub.io/packages/search?repo=directus)
-[![checkov](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml)
-[![Lint&Test chart](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml)
+[![checkov](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml?branch=main)
+[![Lint&Test chart](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml?branch=main)
 
 This Helm chart installs [Directus](https://directus.io/), a real-time API, and App dashboard for managing SQL database content.
 
