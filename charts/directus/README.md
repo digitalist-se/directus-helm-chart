@@ -12,6 +12,8 @@ We strive to make the installation of Directus as easy as possible, but there ar
 
 We recommend that you either override the default values file from the repository or set your keys using  `--set`.
 
+By default, no persistance storage is set, you need to define external storage, or add a volume for file storage. See [External File Storage](README.md#external-file-storage).
+
 ### Add helm repo
 
 Add the Directus Helm repository:
@@ -57,24 +59,18 @@ We recommend having at least three replicas for Directus in production  (`replic
 
 We also advise against turning off the probes, as they help keep Directus active. We have encountered issues when it remains idle, leading to poor responses on the first request, which often results in errors.
 
-If you have more than one replica, you should use Redis for caching, so you can share the cache.
+If you have more than one replica, you should use Redis for caching, so you can share the cache. This is enabled by default.
 
 ```yaml
-extraEnvVars:
-  - name: CACHE_ENABLED
-    value: "true"
-  - name: CACHE_TTL
-    value: 5m
-  - name: CACHE_AUTO_PURGE
-    value: "true"
-  - name: CACHE_STORE
-    value: redis
-  - name: REDIS
-    value: "redis://:mysecretpassword@directus-redis-headless:6379/1"
-  ...
+cache:
+  enabled: true
+  ttl: "5m"
+  autoPurge: true
+  store: "redis"
+
 ```
 
-## Healthchecks
+## Health checks
 
 The probes make HTTP requests to  `/server/health/`, which may trigger warnings in your pod logs for high thresholds on MySQL, cache, or storage. If you are unable to improve the answer time for these services, you can override the default threshold warnings.
 
@@ -171,7 +167,7 @@ extraEnvVars:
 
 ### External File Storage
 
-By default, Directus stores uploaded files on the container disk. As a result, the data will be lost when the pod is restarted. To avoid this, you need to configure Directus to use an external storage adapter, such as S3, Google Storage, or Azure. This can be achieved by adding the necessary environment variables as documented in the [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
+By default, with the helm charts defaults, Directus stores uploaded files on the pod storage. As a result, the data will be lost when the pod is restarted. To avoid this, you need to configure Directus to use an external storage adapter, such as S3, Google Storage, or Azure. This can be achieved by adding the necessary environment variables as documented in the [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
 
 You can add these variables using the following values:
 
@@ -187,9 +183,9 @@ extraEnvVars:
 
 ## Overrides for docker image
 
-We are overriding the Docker defaults by moving `directus bootstrap` o an initContainer and only running `directus start` in the main container.
+We are overriding the Docker defaults by moving `directus bootstrap` to an initContainer and only running `directus start` in the main container.
 
 ## Plan
 
 We are gradually moving more configuration settings to `values.yaml`  instead of requiring all `extraEnvVars` to be set during the initial installation of Directus.
-
+We also plan to support schema import on install and update.
