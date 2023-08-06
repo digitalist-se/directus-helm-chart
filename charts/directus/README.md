@@ -167,7 +167,7 @@ extraEnvVars:
 
 ### External File Storage
 
-By default, Directus stores uploaded files on the container disk. As a result, the data will be lost when the pod is restarted. To avoid this, you need to configure Directus to use an external storage adapter, such as S3, Google Storage, or Azure. This can be achieved by adding the necessary environment variables as documented in the [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
+By default, with the helm charts defaults, Directus stores uploaded files on the pod storage. As a result, the data will be lost when the pod is restarted. To avoid this, you need to configure Directus to use an external storage adapter, such as S3, Google Storage, or Azure. This can be achieved by adding the necessary environment variables as documented in the [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
 
 You can add these variables using the following values:
 
@@ -183,7 +183,7 @@ extraEnvVars:
 
 ## Overrides for docker image
 
-We are overriding the Docker defaults by moving `directus bootstrap` o an initContainer and only running `directus start` in the main container.
+We are overriding the Docker defaults by moving `directus bootstrap` to an initContainer and only running `directus start` in the main container.
 
 ## Plan
 
