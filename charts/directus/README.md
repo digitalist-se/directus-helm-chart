@@ -187,5 +187,5 @@ We are overriding the Docker defaults by moving `directus bootstrap` to an initC
 
 ## Plan
 
-We are gradually moving more configuration settings to `values.yaml`  instead of requiring all `extraEnvVars` to be set during the initial installation of Directus.
+We are gradually moving more configuration settings to `values.yaml` so we don't depend to much on `extraEnvVars`.
 We also plan to support schema import on install and update.
