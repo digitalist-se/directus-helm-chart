@@ -6,6 +6,14 @@
 
 This Helm chart installs [Directus](https://directus.io/), a real-time API, and App dashboard for managing SQL database content.
 
+## Un-official
+
+Please note, this is an un-official Helm chart from Digitalist. 
+
+## License
+
+The Directus software is licensed with a Business Source License 1.1, © 2023 Monospace, Inc. This chart, however, is licensed with GPL v.3 license. This means that for using and distributing Directus itself you would refer to the license of Directus, not the Helm chart license.
+
 ## Install
 
 We strive to make the installation of Directus as easy as possible, but there are a couple of important things you should override from the defaults, namely the key and secret.
