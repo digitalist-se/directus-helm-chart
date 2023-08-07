@@ -20,7 +20,27 @@ We strive to make the installation of Directus as easy as possible, but there ar
 
 We recommend that you either override the default values file from the repository or set your keys using  `--set`.
 
-By default, no persistance storage is set, you need to define external storage, or add a volume for file storage. See [External File Storage](README.md#external-file-storage).
+### File storage
+
+By default, no persistance storage is set, in general, you are recommended to use [External File Storage](README.md#external-file-storage).
+
+If you want to use internal persistance file storage (disk), you need to enable it:
+
+```yaml
+persistence:
+  enabled: true
+```
+
+If you want to have more than one replica of Directus, you need to have a storage class
+that supports ReadWriteMany, else you can't scale the deployment:
+
+```yaml
+persistence:
+  ...
+  storageClass: "longhorn" #or any other class supporting ReadWriteMany
+  accessModes: ReadWriteMany
+  ...
+```
 
 ### Add helm repo
 
@@ -124,6 +144,12 @@ helm delete my-release-name
 | `securityContext`| Deployment securityContext | `{}`   |
 | `service.type`   | Kubernetes service type| `ClusterIP`   |
 | `service.port`   | Kubernetes port where service is exposed  | `80`   |
+| `persistence.enabled` | If to enable  persistence storage | `false`   |
+| `persistence.existingClaim` | Existing Persistent Volume Claim to use |  ``  |
+| `persistence.storageClass` | storageClass for volume  |  `-`  |
+| `persistence.annotations` | Annotations to add to volume  |  `{}`  |
+| `persistence.accessModes` | accessMode for Persistent Volume   |  `ReadWriteOnce`  |
+| `persistence.size`   | Size for Volume   |  `8Gi`  |
 | `ingress.enabled`| Enables Ingress | `false`|
 | `ingress.annotations`| Ingress annotations | `{}`   |
 | `ingress.hosts`  | Ingress extra paths to prepend to every host configuration| `["chart-example.local"]` |
