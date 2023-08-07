@@ -29,7 +29,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: write-permissions
-          image: busybox:latest
+          image: busybox:1.36
           command: ["sh","-c","chown -R 1000:1000 /directus/uploads"]
           volumeMounts:
             - name: uploads
