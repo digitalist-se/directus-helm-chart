@@ -28,6 +28,13 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
+        - name: write-permissions
+          image: busybox:latest
+          command: ["sh","-c","chown -R 1000:1000 /directus/uploads"]
+          volumeMounts:
+            - name: uploads
+              mountPath: /directus/uploads
+              subPath: uploads
 {{- if .Values.mariadb.enabled }}
         - name: db-init
           image:  "{{ .Values.mariadb.image.registry }}/{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
@@ -259,10 +266,13 @@ spec:
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
             {{- end }}
           volumeMounts:
- {{- if .Values.snapshot }}
+{{- if .Values.snapshot }}
             - mountPath: /startup-snapshot
               name: startup-snapshot
 {{- end }}
+            - name: uploads
+              mountPath: /directus/uploads
+              subPath: uploads
 {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 10 }}
 {{- end }}
@@ -313,6 +323,14 @@ spec:
       - name: startup-snapshot
         emptyDir: {}
 {{- end }}
+      - name: uploads
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "directus.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
+
 {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 6 }}
 {{- end }}

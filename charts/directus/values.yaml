@@ -23,10 +23,10 @@ public:
 # Password would be printed out in the init container.
 
 key: 4d596b1af3e1ae23d54110da1a377c66
-# An uniquie identifier, could be created like:
+# An unique identifier, could be created like:
 # openssl rand -hex 16
 secret: 7cf5038d95dfba34178e0c120d77d75e
-# An uniquie identifier, could be created like:
+# An unique identifier, could be created like:
 # openssl rand -hex 16
 
 image:
@@ -65,6 +65,20 @@ service:
   type: ClusterIP
   port: 80
 
+persistence:
+  enabled: false
+  # existingClaim: ""
+  # storageClass: "-"
+  ## Persistent Volume Claim annotations
+  ##
+  annotations: {}
+  ## Persistent Volume Access Mode
+  ##
+  accessModes: ReadWriteOnce
+  ## Persistent Volume size
+  ##
+  size: 8Gi
+
 ingress:
   enabled: false
   annotations: {}
@@ -94,7 +108,7 @@ generateEnvVars:
   redis: true
 # Generates default env variables for mariadb and redis, so you don't
 # need to set this as extraEnvVars. Set to false to disable this
-# behaviour.
+# behavior.
 
 extraEnvVars: {}
   # An array to add extra environment variables
