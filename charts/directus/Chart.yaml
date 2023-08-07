@@ -18,11 +18,11 @@ maintainers:
     url: https://www.digitalist.se/
 
 dependencies:
-- name: mariadb
-  version: "12.2.4"
-  repository: "https://charts.bitnami.com/bitnami"
-  condition: mariadb.enabled
-- name: redis
-  version: "17.11.3"
-  repository: "https://charts.bitnami.com/bitnami"
-  condition: redis.enabled
+  - name: mariadb
+    version: "12.2.4"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: mariadb.enabled
+  - name: redis
+    version: "17.11.3"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
