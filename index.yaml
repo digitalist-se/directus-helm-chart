@@ -3,6 +3,29 @@ entries:
   directus:
   - apiVersion: v2
     appVersion: 10.5.2
+    created: "2023-08-07T07:59:43.830034114Z"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.2.4
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.11.3
+    description: A Helm chart for installing Directus on Kubernetes
+    digest: e6e91f1ae66ae67891a6f2d3e57e52771d8b13c59c08fcf6f980a7ea41475747
+    maintainers:
+    - email: mikke.schiren@digitalist.se
+      name: Mikke Schirén
+      url: https://www.digitalist.se/
+    name: directus
+    type: application
+    urls:
+    - https://github.com/digitalist-se/directus-helm-chart/releases/download/directus-0.7.8/directus-0.7.8.tgz
+    version: 0.7.8
+  - apiVersion: v2
+    appVersion: 10.5.2
     created: "2023-08-06T15:49:37.784937835Z"
     dependencies:
     - condition: mariadb.enabled
@@ -523,4 +546,4 @@ entries:
     urls:
     - https://github.com/digitalist-se/directus-helm-chart/releases/download/directus-0.4.0/directus-0.4.0.tgz
     version: 0.4.0
-generated: "2023-08-06T15:49:37.785151636Z"
+generated: "2023-08-07T07:59:43.830270717Z"
