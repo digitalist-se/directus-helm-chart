@@ -31,8 +31,8 @@ persistence:
   enabled: true
 ```
 
-If you want to have more than one replica of Directus, you need to have a storage class
-that supports ReadWriteMany, else you can't scale the deployment:
+If you desire to have more than one replica of Directus, it is essential to use a storage class that facilitates ReadWriteMany functionality. Without this, the deployment scalability would be restricted, as additional replicas
+would never start:
 
 ```yaml
 persistence:
@@ -100,7 +100,7 @@ cache:
 
 ## Health checks
 
-The probes make HTTP requests to  `/server/health/`, which may trigger warnings in your pod logs for high thresholds on MySQL, cache, or storage. If you are unable to improve the answer time for these services, you can override the default threshold warnings.
+The probes make HTTP requests to  `/server/health/`, which may trigger warnings in your pod logs for high thresholds on MySQL, cache, or storage. If you are unable to improve the response time for these services, you can override the default threshold warnings.
 
 ```yaml
 extraEnvVars:
