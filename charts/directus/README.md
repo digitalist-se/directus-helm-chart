@@ -8,7 +8,7 @@ This Helm chart installs [Directus](https://directus.io/), a real-time API, and 
 
 ## Un-official
 
-Please note, this is an un-official Helm chart from Digitalist. 
+Please note, this is an un-official Helm chart from Digitalist.
 
 ## License
 
