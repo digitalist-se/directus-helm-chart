@@ -50,10 +50,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -81,16 +83,17 @@ persistence:
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
-      - path: /
-        backend:
-          serviceName: chart-example.local
-          servicePort: 80
+        - path: /
+          backend:
+            serviceName: chart-example.local
+            servicePort: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -110,7 +113,8 @@ generateEnvVars:
 # need to set this as extraEnvVars. Set to false to disable this
 # behavior.
 
-extraEnvVars: {}
+extraEnvVars:
+  {}
   # An array to add extra environment variables
   # E.g.
   # extraEnvVars:
@@ -123,8 +127,8 @@ log:
 # Log level could be set to: fatal, error, warn, info, debug, trace or silent.
 # For log style, there is two options, pretty or raw.
 
-
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -149,7 +153,8 @@ initContainers: []
 snapshot: false
 # take s snapshot of schema config in init container.
 
-sidecars: []
+sidecars:
+  []
   # You can add any sidecar to the directus pod, like:
   # sidecars:
   #   - image: busybox
@@ -197,21 +202,21 @@ extraVolumeMounts: []
 
 extraServices: {}
 #  - name: foo
-    ## Service port type
+## Service port type
 #    type: ClusterIP
-    ## Service protocol
+## Service protocol
 #    protocol: TCP
-    ## The container target port
+## The container target port
 #    containerPort: 12001
-    ## The service port
+## The service port
 #    port: 12001
 #    selector:
 #      app: directus
-    ## The node port (only relevant for type LoadBalancer or NodePort)
+## The node port (only relevant for type LoadBalancer or NodePort)
 #    nodePort:
-    ## The cluster ip address (only relevant for type LoadBalancer or NodePort)
+## The cluster ip address (only relevant for type LoadBalancer or NodePort)
 #    clusterIP:
-    ## The loadbalancer ip address (only relevant for type LoadBalancer)
+## The loadbalancer ip address (only relevant for type LoadBalancer)
 #    loadBalancerIP:
 
 autoscaling:
@@ -272,37 +277,37 @@ mariadb:
     ##
     debug: false
 
-## String to partially override mariadb.fullname template (will maintain the release name)
-##
-# nameOverride:
+  ## String to partially override mariadb.fullname template (will maintain the release name)
+  ##
+  # nameOverride:
 
-## String to fully override mariadb.fullname template
-##
-# fullnameOverride:
+  ## String to fully override mariadb.fullname template
+  ##
+  # fullnameOverride:
 
-## Cluster domain
-##
+  ## Cluster domain
+  ##
   clusterDomain: cluster.local
 
-## Common annotations to add to all MariaDB resources (sub-charts are not considered). Evaluated as a template
-##
+  ## Common annotations to add to all MariaDB resources (sub-charts are not considered). Evaluated as a template
+  ##
   commonAnnotations: {}
 
-## Common labels to add to all MariaDB resources (sub-charts are not considered). Evaluated as a template
-##
+  ## Common labels to add to all MariaDB resources (sub-charts are not considered). Evaluated as a template
+  ##
   commonLabels: {}
 
-## Use an alternate scheduler, e.g. "stork".
-## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
-##
-# schedulerName:
+  ## Use an alternate scheduler, e.g. "stork".
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  # schedulerName:
 
-## MariaDB architecture. Allowed values: standalone or replication
-##
+  ## MariaDB architecture. Allowed values: standalone or replication
+  ##
   architecture: standalone
 
-## MariaDB Authentication parameters
-##
+  ## MariaDB Authentication parameters
+  ##
   auth:
     ## MariaDB root password
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
@@ -339,22 +344,22 @@ mariadb:
     ##
     customPasswordFiles: {}
 
-## initdb scripts
-## Specify dictionary of scripts to be run at first boot
-## Example:
-## initdbScripts:
-##   my_init_script.sh: |
-##      #!/bin/bash
-##      echo "Do something."
-##
+  ## initdb scripts
+  ## Specify dictionary of scripts to be run at first boot
+  ## Example:
+  ## initdbScripts:
+  ##   my_init_script.sh: |
+  ##      #!/bin/bash
+  ##      echo "Do something."
+  ##
   initdbScripts: {}
 
-## Existing ConfigMap with custom init scripts
-##
-# initdbScriptsConfigMap:
+  ## Existing ConfigMap with custom init scripts
+  ##
+  # initdbScriptsConfigMap:
 
-## Mariadb Primary parameters
-##
+  ## Mariadb Primary parameters
+  ##
   primary:
     ## Command and args for running the container (set to default if not set). Use array form
     ##
@@ -648,8 +653,8 @@ mariadb:
       ##
       # maxUnavailable: 1
 
-## Mariadb Secondary parameters
-##
+  ## Mariadb Secondary parameters
+  ##
   secondary:
     ## Number of Mariadb Secondary replicas to deploy
     ##
@@ -941,9 +946,9 @@ mariadb:
       ##
       # maxUnavailable: 1
 
-## MariaDB pods ServiceAccount
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-##
+  ## MariaDB pods ServiceAccount
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  ##
   serviceAccount:
     ## Specifies whether a ServiceAccount should be created
     ##
@@ -956,17 +961,17 @@ mariadb:
     ##
     annotations: {}
 
-## Role Based Access
-## ref: https://kubernetes.io/docs/admin/authorization/rbac/
-##
+  ## Role Based Access
+  ## ref: https://kubernetes.io/docs/admin/authorization/rbac/
+  ##
   rbac:
     ## Specifies whether RBAC rules should be created
     ##
     create: false
 
-## Init containers parameters:
-## volumePermissions: Change the owner and group of the persistent volume mountpoint to runAsUser:fsGroup values from the securityContext section.
-##
+  ## Init containers parameters:
+  ## volumePermissions: Change the owner and group of the persistent volume mountpoint to runAsUser:fsGroup values from the securityContext section.
+  ##
   volumePermissions:
     enabled: false
     image:
@@ -982,8 +987,8 @@ mariadb:
       #   - myRegistryKeySecretName
     resources: {}
 
-## Mysqld Prometheus exporter parameters
-##
+  ## Mysqld Prometheus exporter parameters
+  ##
   metrics:
     enabled: false
     image:
@@ -1826,7 +1831,7 @@ redis:
     ##
     terminationGracePeriodSeconds: 30
 
-## @section Redis(TM) Sentinel configuration parameters
+  ## @section Redis(TM) Sentinel configuration parameters
 
   sentinel:
     ## @param sentinel.enabled Use Redis(TM) Sentinel on Redis(TM) pods.
