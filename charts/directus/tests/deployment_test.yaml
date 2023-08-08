@@ -23,7 +23,6 @@ tests:
           path: spec.replicas
           value: 1
 
-
   - it: should have replica count 2
     set:
       replicaCount: 2
@@ -31,8 +30,6 @@ tests:
       - equal:
           path: spec.replicas
           value: 2
-
-
 
   - it: image tag should be set to appVersion
     chart:
@@ -107,3 +104,72 @@ tests:
       - equal:
           path: spec.template.metadata.annotations["test/foo"]
           value: "bar"
+
+  - it: should have a pod security context
+    set:
+      podSecurityContext:
+        fsGroup: 99999
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 99999
+
+  - it: should have a security context
+    set:
+      securityContext:
+        runAsNonRoot: false
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: false
+
+  - it: should have a sidecar
+    set:
+      sidecars:
+        - image: busybox
+          name: sidecar
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: sidecar
+
+  - it: should have a snapshots init container
+    set:
+      snapshot: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[3].name
+          value: directus-schema-snapshot
+
+  - it: should have a environment variable with value of admin email
+    set:
+      admin.email: 'foo@bar.com'
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: ADMIN_EMAIL
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: 'foo@bar.com'
+
+  - it: should have a environment variable with value of admin password
+    set:
+      admin.password: 'monkey'
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: ADMIN_PASSWORD
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: 'monkey'
+
+  - it: should have a public URL set
+    set:
+      public.url: 'http://monkey.bar'
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[2].name
+          value: PUBLIC_URL
+      - equal:
+          path: spec.template.spec.containers[0].env[2].value
+          value: 'http://monkey.bar'
