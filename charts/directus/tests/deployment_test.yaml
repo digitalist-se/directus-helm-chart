@@ -1,0 +1,175 @@
+suite: test directus deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should be a Deployment
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+
+  - it: should be named
+    release:
+      name: my-release
+    asserts:
+      - equal:
+          path: metadata.name
+          value: my-release-directus
+
+  - it: should have replica count 1
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+
+  - it: should have replica count 2
+    set:
+      replicaCount: 2
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+
+  - it: image tag should be set to appVersion
+    chart:
+      version: 1.0.0
+      appVersion: 1.0.0
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "directus/directus:1.0.0"
+
+  - it: should be possible to override image
+    set:
+      image.repository: 'foo/directus'
+      image.tag: "v1"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "foo/directus:v1"
+
+  - it: should have memory limits resources set
+    set:
+      image.pullPolicy: Always
+      resources:
+        limits:
+          memory: 128Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 128Mi
+
+  - it: should have memory requests resources set
+    set:
+      image.pullPolicy: Always
+      resources:
+        requests:
+          memory: 28Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.memory
+          value: 28Mi
+
+  - it: should have cpu limits resources set
+    set:
+      image.pullPolicy: Always
+      resources:
+        limits:
+          cpu: 500m
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.cpu
+          value: 500m
+
+  - it: should have cpu requests resources set
+    set:
+      image.pullPolicy: Always
+      resources:
+        requests:
+          cpu: 100m
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.cpu
+          value: 100m
+
+  - it: should have an annotations, default and custom.
+    set:
+      podAnnotations:
+        test/foo: "bar"
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations["seccomp.security.alpha.kubernetes.io/pod"]
+          value: "runtime/default"
+      - equal:
+          path: spec.template.metadata.annotations["test/foo"]
+          value: "bar"
+
+  - it: should have a pod security context
+    set:
+      podSecurityContext:
+        fsGroup: 99999
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 99999
+
+  - it: should have a security context
+    set:
+      securityContext:
+        runAsNonRoot: false
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: false
+
+  - it: should have a sidecar
+    set:
+      sidecars:
+        - image: busybox
+          name: sidecar
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: sidecar
+
+  - it: should have a snapshots init container
+    set:
+      snapshot: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[3].name
+          value: directus-schema-snapshot
+
+  - it: should have a environment variable with value of admin email
+    set:
+      admin.email: 'foo@bar.com'
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: ADMIN_EMAIL
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: 'foo@bar.com'
+
+  - it: should have a environment variable with value of admin password
+    set:
+      admin.password: 'monkey'
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: ADMIN_PASSWORD
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: 'monkey'
+
+  - it: should have a public URL set
+    set:
+      public.url: 'http://monkey.bar'
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[2].name
+          value: PUBLIC_URL
+      - equal:
+          path: spec.template.spec.containers[0].env[2].value
+          value: 'http://monkey.bar'

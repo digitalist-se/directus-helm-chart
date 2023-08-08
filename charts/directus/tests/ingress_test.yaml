@@ -1,0 +1,10 @@
+suite: test ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: should be a Ingress
+    set:
+      ingress.enabled: true
+    asserts:
+      - isKind:
+          of: Ingress
