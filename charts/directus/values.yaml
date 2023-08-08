@@ -48,7 +48,13 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+# podAnnotations: {}
+podAnnotations:
+  seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
+# seccomp.security.alpha.kubernetes.io/pod is added by default here for security reasons
+# https://docs.bridgecrew.io/docs/bc_k8s_30
+# To add more annotations, do like:
+# my.foo/bar: "foo"
 
 podSecurityContext:
   {}
