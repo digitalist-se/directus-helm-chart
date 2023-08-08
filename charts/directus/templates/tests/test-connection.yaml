@@ -5,12 +5,33 @@ metadata:
   labels:
     {{- include "directus.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": test
+    helm.sh/hook: test
     helm.sh/hook-delete-policy: hook-succeeded
 spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
   containers:
     - name: wget
+      resources:
+        limits:
+          cpu: "0.5"
+          memory: "100Mi"
+        requests:
+          cpu: "0.1"
+          memory: "10Mi"
       image: busybox:1.36
       command: ['wget']
-      args: ['{{ include "directus.fullname" . }}:{{ .Values.service.port }}/server/health/']
+      args: ['-P', '/out', '{{ include "directus.fullname" . }}:{{ .Values.service.port }}/server/health/']
+      securityContext:
+        readOnlyRootFilesystem: true
+        runAsUser: 1000
+      volumeMounts:
+      - mountPath: /out
+        name: out
   restartPolicy: Never
+  volumes:
+  - name: out
+    emptyDir:
+      sizeLimit: 1Mi
