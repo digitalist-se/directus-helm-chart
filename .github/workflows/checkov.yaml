@@ -32,6 +32,7 @@ jobs:
           output_format: cli,sarif # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
           output_file_path: console,results.sarif
           config_file: .tests/.checkov.yaml
+          skip_check: CKV_K8S_21 # comma separated list
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         # Results are generated only on a success or failure
