@@ -1,7 +1,7 @@
-name: Helm unit test
+name: Helm unit testing
 on:
   push:
-    branches: ["*"]
+    branches-ignore: ['main']
   pull_request:
     branches: ["main"]
   workflow_dispatch:

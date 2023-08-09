@@ -3,6 +3,7 @@
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/directus)](https://artifacthub.io/packages/search?repo=directus)
 [![checkov](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/checkov.yaml?branch=main)
 [![Lint&Test chart](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/lint-test.yaml?branch=main)
+[![Unit test chart](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/unit-test.yaml/badge.svg)](https://github.com/digitalist-se/directus-helm-chart/actions/workflows/unit-test.yaml?branch=main)
 
 This Helm chart installs [Directus](https://directus.io/), a real-time API, and App dashboard for managing SQL database content.
 
@@ -201,9 +202,10 @@ extraEnvVars:
 
 ### External File Storage
 
-By default, with the helm charts defaults, Directus stores uploaded files on the pod storage. As a result, the data will be lost when the pod is restarted. To avoid this, you need to configure Directus to use an external storage adapter, such as S3, Google Storage, or Azure. This can be achieved by adding the necessary environment variables as documented in the [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
+By default, with the helm charts defaults, Directus stores uploaded files on the pod storage in an empty dir. As a result, the data will be lost when the pod is restarted. To avoid this, you need to configure Directus to use an external storage adapter, such as S3, Google Storage, or Azure, or enable persistent storage (only recommended if you have storage class with `ReadWriteMany` capacity).
+For external file storage, you need to add the necessary environment variables as documented in the [Directus Documentation](https://docs.directus.io/self-hosted/config-options.html#file-storage).
 
-You can add these variables using the following values:
+You can add these variables like this:
 
 ```yaml
 extraEnvVars:
