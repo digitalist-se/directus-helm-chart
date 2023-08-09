@@ -221,6 +221,22 @@ extraEnvVars:
 
 We are overriding the Docker defaults by moving `directus bootstrap` to an initContainer and only running `directus start` in the main container.
 
+## Helm unit testing
+
+Tests are in `charts/directus/tests`
+
+First install the helm plugin if you don't have it.
+
+```bash
+helm plugin install https://github.com/helm-unittest/helm-unittest.git
+```
+
+In the charts dir (`charts/directus`), run:
+
+````bash
+helm unittest . --strict
+```
+
 ## Plan
 
 We are gradually moving more configuration settings to `values.yaml` so we don't depend to much on `extraEnvVars`.
