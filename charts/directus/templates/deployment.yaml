@@ -52,12 +52,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "directus.fullname" . }}-mariadb
+                  name: {{ .Release.Name }}-mariadb
                   key: mariadb-password
             - name: DB_CLIENT
               value: mysql
             - name: DB_HOST
-              value: {{ template "directus.fullname" . }}-mariadb
+              value: {{ .Release.Name }}-mariadb
 {{- end }}
         - name: {{ .Chart.Name }}-init
           securityContext:
@@ -104,12 +104,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "directus.fullname" . }}-mariadb
+                  name: {{ .Release.Name }}-mariadb
                   key: mariadb-password
             - name: DB_CLIENT
               value: mysql
             - name: DB_HOST
-              value: {{ template "directus.fullname" . }}-mariadb
+              value: {{ .Release.Name }}-mariadb
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
@@ -152,12 +152,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "directus.fullname" . }}-mariadb
+                  name: {{ .Release.Name }}-mariadb
                   key: mariadb-password
             - name: DB_CLIENT
               value: mysql
             - name: DB_HOST
-              value: {{ template "directus.fullname" . }}-mariadb
+              value: {{ .Release.Name }}-mariadb
             {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
@@ -165,10 +165,10 @@ spec:
           volumeMounts:
             - mountPath: /startup-snapshot
               name: startup-snapshot
-      {{- end }} 
+      {{- end }}
       {{- if .Values.initContainers }}
 {{ toYaml .Values.initContainers | indent 8 }}
-      {{- end }} 
+      {{- end }}
       containers:
         {{- if .Values.sidecars }}
 {{ toYaml .Values.sidecars | indent 8 }}
@@ -227,12 +227,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "directus.fullname" . }}-mariadb
+                  name: {{ .Release.Name }}-mariadb
                   key: mariadb-password
             - name: DB_CLIENT
               value: mysql
             - name: DB_HOST
-              value: {{ template "directus.fullname" . }}-mariadb
+              value: {{ .Release.Name }}-mariadb
             {{- end }}
 {{- end }}
 {{- if .Values.generateEnvVars.redis }}
@@ -240,7 +240,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "directus.fullname" . }}-redis
+                  name: {{ .Release.Name }}-redis
                   key: redis-password
             - name: REDIS_PORT
               value: "6379"
@@ -249,7 +249,7 @@ spec:
             - name: REDIS_USERNAME
               value: ""
             - name: REDIS_HOST
-              value: {{ template "directus.fullname" . }}-redis-headless
+              value: {{ .Release.Name }}-redis-headless
             {{- end }}
 {{- end }}
             {{- if .Values.cache.enabled }}
