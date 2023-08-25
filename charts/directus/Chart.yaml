@@ -6,7 +6,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.7.23
+version: 0.7.24
 
 # This is the version number of the application being deployed. They should reflect the version
 # the application is using.
@@ -23,6 +23,6 @@ dependencies:
     repository: "https://charts.bitnami.com/bitnami"
     condition: mariadb.enabled
   - name: redis
-    version: "17.11.3"
+    version: "17.16.0"
     repository: "https://charts.bitnami.com/bitnami"
     condition: redis.enabled
