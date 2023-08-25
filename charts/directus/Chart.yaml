@@ -10,7 +10,7 @@ version: 0.7.23
 
 # This is the version number of the application being deployed. They should reflect the version
 # the application is using.
-appVersion: "10.6.0"
+appVersion: "10.6.1"
 
 maintainers:
   - name: Mikke Schirén
