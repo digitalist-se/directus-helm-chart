@@ -9,7 +9,7 @@ This Helm chart installs [Directus](https://directus.io/), a real-time API, and 
 
 ## Un-official
 
-Please note, this is an un-official Helm chart from Digitalist.
+Please note, this is an un-official Helm chart from [Digitalist](https://www.digitalist.se/).
 
 ## License
 
@@ -20,6 +20,20 @@ The Directus software is licensed with a Business Source License 1.1, © 2023 Mo
 We strive to make the installation of Directus as easy as possible, but there are a couple of important things you should override from the defaults, namely the key and secret.
 
 We recommend that you either override the default values file from the repository or set your keys using  `--set`.
+
+### Websockets
+
+If you are using websockets with Directus, and using ingress-nginx, websockets are supported by default. But you should set these annotations (if you are not doing it in [config](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#proxy-read-timeout)), otherwise, connection will be closed after default time, 60 seconds, which is not what you want if you are using websockets. Recommended is to set timeouts to at least on hour (3600 seconds).
+
+```yaml
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+```
+
+If you are using another type of ingress, please refer to that ingress documentation for setup.
 
 ### File storage
 
