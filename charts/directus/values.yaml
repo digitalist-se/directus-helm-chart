@@ -156,8 +156,14 @@ initContainers: []
 #       - "-c"
 #       - "echo 'message from init container'"
 
-snapshot: false
-# take s snapshot of schema config in init container.
+schema:
+  configMap:
+  # An name of a existing configmap to use for schema snapshots.
+  snapshot:
+    init: false
+    # take s snapshot of schema in init container.
+    importOnStart: false
+    # import schema.configMap on pod start.
 
 sidecars:
   []
