@@ -36,6 +36,8 @@ spec:
             - name: uploads
               mountPath: /directus/uploads
               subPath: uploads
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
 {{- if .Values.mariadb.enabled }}
         - name: db-init
           image:  "{{ .Values.mariadb.image.registry }}/{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
@@ -115,6 +117,8 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
             {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
       {{- if .Values.snapshot }}
         - name: {{ .Chart.Name }}-schema-snapshot
           securityContext:
