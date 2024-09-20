@@ -6,3 +6,7 @@ Based on the [Directus Community Helm Charts](https://github.com/directus-commun
 ## Documentation
 
 Chart documentation is found in the [chart directory](charts/directus/README.md).
+
+## Schema
+
+Json schema is generated with <https://github.com/losisin/helm-values-schema-json>.
