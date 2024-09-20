@@ -90,9 +90,8 @@ persistence:
   ##
   size: 8Gi
 
-persistence-extensions:
+persistenceExtensions:
   enabled: false
-  # existingClaim: ""
   # storageClass: "-"
   ## Persistent Volume Claim annotations
   ##
@@ -104,9 +103,8 @@ persistence-extensions:
   ##
   size: 8Gi
 
-persistence-templates:
+persistenceTemplates:
   enabled: false
-  # existingClaim: ""
   # storageClass: "-"
   ## Persistent Volume Claim annotations
   ##

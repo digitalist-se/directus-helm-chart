@@ -1,0 +1,26 @@
+{{- if and .Values.persistenceExtensions.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "directus.fullname" . }}-extensions
+  namespace: {{ .Release.Namespace }}
+{{- with .Values.persistenceExtensions.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "directus.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistenceExtensions.accessModes }}
+  resources:
+    requests:
+      storage: {{ .Values.persistenceExtensions.size }}
+{{- if .Values.persistenceExtensions.storageClass }}
+{{- if (eq "-" .Values.persistenceExtensions.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistenceExtensions.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

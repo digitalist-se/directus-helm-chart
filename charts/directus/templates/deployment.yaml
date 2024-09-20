@@ -347,26 +347,26 @@ spec:
         emptyDir: {}
 {{- end }}
       - name: uploads
-      {{- if .Values.persistence.enabled }}
+        {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim | default (include "directus.fullname" .) }}
-      {{- else }}
+        {{- else }}
         emptyDir: {}
-      {{- end -}}
+        {{- end }}
       - name: extensions
-      {{- if .Values.persistence-extensions.enabled }}
+        {{- if .Values.persistenceExtensions.enabled }}
         persistentVolumeClaim:
-          claimName: {{ default (include "directus.fullname" .)-extensions }}
-      {{- else }}
+          claimName: {{ include "directus.fullname" . }}-extensions
+        {{- else }}
         emptyDir: {}
-      {{- end -}}
+        {{- end }}
       - name: templates
-      {{- if .Values.persistence-templates.enabled }}
+        {{- if .Values.persistenceTemplates.enabled }}
         persistentVolumeClaim:
-          claimName: {{ default (include "directus.fullname" .)-templates }}
-      {{- else }}
+          claimName: {{ include "directus.fullname" . }}-templates
+        {{- else }}
         emptyDir: {}
-      {{- end -}}
+        {{- end }}
 
 
 {{- if .Values.extraVolumes }}
