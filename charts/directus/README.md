@@ -151,6 +151,16 @@ helm delete my-release-name
 | `persistence.annotations` | Annotations to add to volume  |  `{}`  |
 | `persistence.accessModes` | accessMode for Persistent Volume   |  `ReadWriteOnce`  |
 | `persistence.size`   | Size for Volume   |  `8Gi`  |
+| `persistenceExtensions.enabled` | If to enable  persistence storage for extensions volume | `false`   |
+| `persistenceExtensions.storageClass` | storageClass for volume  |  `-`  |
+| `persistenceExtensions.annotations` | Annotations to add to volume  |  `{}`  |
+| `persistenceExtensions.accessModes` | accessMode for Persistent Volume   |  `ReadWriteOnce`  |
+| `persistenceExtensions.size`   | Size for Volume   |  `8Gi`  |
+| `persistenceTemplates.enabled` | If to enable  persistence storage for templates volume | `false`   |
+| `persistenceTemplates.storageClass` | storageClass for volume  |  `-`  |
+| `persistenceTemplates.annotations` | Annotations to add to volume  |  `{}`  |
+| `persistenceTemplates.accessModes` | accessMode for Persistent Volume   |  `ReadWriteOnce`  |
+| `persistenceTemplates.size`   | Size for Volume   |  `8Gi`  |
 | `ingress.enabled`| Enables Ingress | `false`|
 | `ingress.annotations`| Ingress annotations | `{}`   |
 | `ingress.hosts`  | Ingress extra paths to prepend to every host configuration| `["chart-example.local"]` |
