@@ -112,9 +112,11 @@ spec:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
             {{- end }}
-            {{- if .Values.extraEnvVars }}
-            {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
-            {{- end }}
+          {{- if .Values.extraEnvVars }}
+          envFrom:
+          - configMapRef:
+            name: {{ include "directus.fullname" . }}-extra-environment-variables
+          {{- end }}
       {{- if .Values.snapshot }}
         - name: {{ .Chart.Name }}-schema-snapshot
           securityContext:
@@ -160,9 +162,11 @@ spec:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
             {{- end }}
-            {{- if .Values.extraEnvVars }}
-            {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
-            {{- end }}
+          {{- if .Values.extraEnvVars }}
+          envFrom:
+          - configMapRef:
+            name: {{ include "directus.fullname" . }}-extra-environment-variables
+          {{- end }}
           volumeMounts:
             - mountPath: /startup-snapshot
               name: startup-snapshot
@@ -263,9 +267,11 @@ spec:
             - name: CACHE_AUTO_PURGE
               value: {{ .Values.cache.autoPurge | quote }}
             {{- end }}
-            {{- if .Values.extraEnvVars }}
-            {{- tpl (toYaml .Values.extraEnvVars) $ | nindent 12 }}
-            {{- end }}
+          {{- if .Values.extraEnvVars }}
+          envFrom:
+          - configMapRef:
+            name: {{ include "directus.fullname" . }}-extra-environment-variables
+          {{- end }}
           volumeMounts:
 {{- if .Values.snapshot }}
             - mountPath: /startup-snapshot
@@ -281,7 +287,7 @@ spec:
             - name: http
               containerPort: 8055
               protocol: TCP
-          {{- if .Values.startupProbe.enabled }} 
+          {{- if .Values.startupProbe.enabled }}
           startupProbe:
             httpGet:
               path: /server/health/
