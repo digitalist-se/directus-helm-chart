@@ -119,8 +119,16 @@ spec:
           - configMapRef:
             name: {{ include "directus.fullname" . }}-extra-environment-variables
           {{- end }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: uploads
+              mountPath: /directus/uploads
+              subPath: uploads
+            - name: extensions
+              mountPath: /directus/extensions
+              subPath: extensions
+            - name: templates
+              mountPath: /directus/templates
+              subPath: templates
       {{- if .Values.snapshot }}
         - name: {{ .Chart.Name }}-schema-snapshot
           securityContext:
@@ -284,6 +292,12 @@ spec:
             - name: uploads
               mountPath: /directus/uploads
               subPath: uploads
+            - name: extensions
+              mountPath: /directus/extensions
+              subPath: extensions
+            - name: templates
+              mountPath: /directus/templates
+              subPath: templates
 {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 12 }}
 {{- end }}
@@ -335,12 +349,27 @@ spec:
         emptyDir: {}
 {{- end }}
       - name: uploads
-      {{- if .Values.persistence.enabled }}
+        {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim | default (include "directus.fullname" .) }}
-      {{- else }}
+        {{- else }}
         emptyDir: {}
-      {{- end -}}
+        {{- end }}
+      - name: extensions
+        {{- if .Values.persistenceExtensions.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ include "directus.fullname" . }}-extensions
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: templates
+        {{- if .Values.persistenceTemplates.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ include "directus.fullname" . }}-templates
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+
 
 {{- if .Values.extraVolumes }}
 {{ toYaml .Values.extraVolumes | indent 6 }}
