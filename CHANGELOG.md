@@ -1,21 +1,17 @@
 # Change log
 
-<<<<<<< HEAD
 ## [0.9.08] - 2024-09-21
 
 ### Added
 
 - Example overrides in example folder.
 
-||||||| f3b1c4b
-=======
 ## [0.9.07] - 2024-09-21
 
 ### Fixed
 
 - Add back pathType for ingress
 
->>>>>>> 66634b7062186818a1c6aa0947df07f8b0fd0592
 ## [0.9.06] - 2024-09-21
 
 ### Changed
