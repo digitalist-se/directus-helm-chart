@@ -1,5 +1,11 @@
 # Change log
 
+## [0.9.07] - 2024-09-20
+
+### Fixed
+
+- Add back pathType for ingress
+
 ## [0.9.05] - 2024-09-20
 
 ### Added
