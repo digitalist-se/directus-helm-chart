@@ -1,5 +1,11 @@
 # Change log
 
+## [0.9.06] - 2024-09-21
+
+### Changed
+
+- Set write permissions for node user on extensions and templates volumes
+
 ## [0.9.05] - 2024-09-20
 
 ### Added
