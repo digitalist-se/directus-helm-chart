@@ -1,0 +1,56 @@
+replicaCount: 3
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+admin:
+  email: me@email.com
+  password: secret-pass
+
+public:
+  url: https://directus.test
+
+key: 16480db0ea71cc6a10a2b1f44c89a3da
+# An unique identifier, could be created like:
+# openssl rand -hex 16
+secret: d685770f666b4f86c7094a7df671ede9
+
+persistence:
+  enabled: true
+  storageClass: "longhorn"
+  accessModes: ReadWriteMany
+
+persistenceExtensions:
+  enabled: true
+  storageClass: "longhorn"
+  accessModes: ReadWriteMany
+
+persistenceTemplates:
+  enabled: true
+  storageClass: "longhorn"
+  accessModes: ReadWriteMany
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: directus.test
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: directus-test-tls
+      hosts:
+        - directus.test
