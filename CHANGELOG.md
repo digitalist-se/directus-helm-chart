@@ -1,5 +1,11 @@
 # Change log
 
+## [0.9.08] - 2024-09-21
+
+### Added
+
+- Example overrides in example folder.
+
 ## [0.9.07] - 2024-09-21
 
 ### Fixed

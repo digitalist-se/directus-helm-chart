@@ -41,6 +41,16 @@ persistence:
   storageClass: "longhorn" #or any other class supporting ReadWriteMany
   accessModes: ReadWriteMany
   ...
+persistenceExtensions:
+  ...
+  storageClass: "longhorn" #or any other class supporting ReadWriteMany
+  accessModes: ReadWriteMany
+  ...
+persistenceTemplates:
+  ...
+  storageClass: "longhorn" #or any other class supporting ReadWriteMany
+  accessModes: ReadWriteMany
+  ...
 ```
 
 ### Add helm repo
@@ -71,6 +81,11 @@ openssl rand -hex 16
 ```bash
 helm install my-release-name -f my-overrides.yaml directus/directus
 ```
+
+### Example files
+
+In the root of the git repo, in folder examples, there are two examples deployment
+overrides, one for a simple setup, and the other for a high availability setup.
 
 ### Simple installation test
 
