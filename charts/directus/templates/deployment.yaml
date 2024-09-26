@@ -126,7 +126,7 @@ spec:
           {{- if .Values.extraEnvVars }}
           envFrom:
           - configMapRef:
-            name: {{ include "directus.fullname" . }}-extra-environment-variables
+              name: {{ include "directus.fullname" . }}-extra-environment-variables
           {{- end }}
           volumeMounts:
             - name: uploads
@@ -186,7 +186,7 @@ spec:
           {{- if .Values.extraEnvVars }}
           envFrom:
           - configMapRef:
-            name: {{ include "directus.fullname" . }}-extra-environment-variables
+              name: {{ include "directus.fullname" . }}-extra-environment-variables
           {{- end }}
           volumeMounts:
             - mountPath: /startup-snapshot
@@ -291,7 +291,7 @@ spec:
           {{- if .Values.extraEnvVars }}
           envFrom:
           - configMapRef:
-            name: {{ include "directus.fullname" . }}-extra-environment-variables
+              name: {{ include "directus.fullname" . }}-extra-environment-variables
           {{- end }}
           volumeMounts:
 {{- if .Values.snapshot }}
