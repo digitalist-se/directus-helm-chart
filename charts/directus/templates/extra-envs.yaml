@@ -8,6 +8,6 @@ metadata:
     {{- include "directus.labels" . | nindent 4 }}
 data:
 {{- range .Values.extraEnvVars }}
-  {{ .name }}: {{ .value }}
+  {{ .name }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
