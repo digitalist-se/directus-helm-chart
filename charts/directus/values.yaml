@@ -282,6 +282,12 @@ tolerations: []
 
 affinity: {}
 
+busybox:
+  image:
+    registry: docker.io
+    repository: busybox
+    tag: 1.36
+
 mariadb:
   enabled: true
   ## Global Docker image parameters
